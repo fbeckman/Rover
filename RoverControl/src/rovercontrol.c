@@ -36,8 +36,8 @@ int getDistanceInCm(int trig, int echo) {
 #define PIN_BASE 300
 #define HERTZ 60
 
-#define SERVOMIN 263
-#define SERVOMAX 587
+#define SERVOMIN 160
+#define SERVOMAX 610
 
 int pwmSetup() {
 	int fd = pca9685Setup(PIN_BASE, 0x40, HERTZ);
@@ -56,13 +56,15 @@ int convertDegreeToPulseLength(int degree)
 	
 	if (degree > 90) { degree = 90; };
 	if (degree < -90) { degree = -90; };
-	pulseLength = (int)(425 + (int)(degree) * 1.8);
+	pulseLength = (int)((SERVOMAX + SERVOMIN) / 2) + (int)(degree) * ((SERVOMAX + SERVOMIN) / 180);
 	if (pulseLength < SERVOMIN) { pulseLength = SERVOMIN; }
 	else if (pulseLength > SERVOMAX) { pulseLength = SERVOMAX; };
+	//printf("pulseLength %d\n", pulseLength);
 	return pulseLength;
 }
 
 void setServo(int channel, int degree) {
+	//printf("Degree %d\n", degree);
 	pwmWrite(PIN_BASE + channel, convertDegreeToPulseLength(degree));
 }
 // End Servos
@@ -84,7 +86,7 @@ int getPortValue(int port) {
 	return digitalRead(port);
 }
 
-#define ZEROTICKSFRONT 1520
+#define ZEROTICKSFRONT 1480
 int lastLevelFront = -1;
 int startTickFront = 0;
 int endTickFront = 0;
@@ -100,14 +102,12 @@ void frontSteeringPWM(int gpio, int level, uint32_t tick) {
 	if (lastLevelFront == 1 && level == 0) {
 		endTickFront = tick;
 		ticksFront = endTickFront - startTickFront;
-		printf("FrontSteeringTicks %d\n", ticksFront);
+		//printf("FrontSteeringTicks %d\n", ticksFront);
 		if (ticksFront < 980 || ticksFront > 2050) {
 			ticksFront = ZEROTICKSFRONT;
 		}
 	}
 	lastLevelFront = level;
-
-	//printf("GPIO %d became %d\n", gpio, level);
 }
 int getFrontSteeringTicks() {
 	return ticksFront;
@@ -138,8 +138,6 @@ void rearSteeringPWM(int gpio, int level, uint32_t tick) {
 		}
 	}
 	lastLevelRear = level;
-
-	//printf("GPIO %d became %d\n", gpio, level);
 }
 int getRearSteeringTicks() {
 	return ticksRear;
@@ -148,7 +146,7 @@ int getRearSteeringValue() {
 	return (int)((ZEROTICKSREAR - ticksRear) * 18 / 100);
 }
 
-#define ZEROTICKSSPEED 1510
+#define ZEROTICKSSPEED 1490
 int lastLevelSpeed = -1;
 int startTickSpeed = 0;
 int endTickSpeed = 0;
@@ -164,14 +162,12 @@ void speedPWM(int gpio, int level, uint32_t tick) {
 	if (lastLevelSpeed == 1 && level == 0) {
 		endTickSpeed = tick;
 		ticksSpeed = endTickSpeed - startTickSpeed;
-		//printf("SpeedTicks %d\n", ticks18);
+		//printf("SpeedTicks %d\n", ticksSpeed);
 		if (ticksSpeed < 1000 || ticksSpeed > 2000) {
 			ticksSpeed = ZEROTICKSSPEED;
 		}
 	}
 	lastLevelSpeed = level;
-
-	//printf("GPIO %d became %d\n", gpio, level);
 }
 int getSpeedTicks() {
 	return ticksSpeed;
@@ -194,9 +190,9 @@ int rovercontrolSetup() {
 	rc = gpioInitialise();
 	if (rc <0)
 		return rc;
-	gpioSetAlertFunc(1, frontSteeringPWM);
-	gpioSetAlertFunc(15, rearSteeringPWM);
-	gpioSetAlertFunc(18, speedPWM);
+	gpioSetAlertFunc(21, frontSteeringPWM);
+	gpioSetAlertFunc(20, rearSteeringPWM);
+	gpioSetAlertFunc(19, speedPWM);
 	return 0;
 }
 

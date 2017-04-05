@@ -4,31 +4,25 @@
 #include <stdio.h>
 #include "../src-gen/RoverControl.h"
 
-#define ENGINE 2  /* PWM channel of the engine controller */
-#define REAR_STEERING 1  /* PWM channel of the rear steering servo */
-#define FRONT_STEERING 0  /* PWM channel of the front steering servo */
-#define FRONTSENSOR_MOVEMENT 8  /* PWM channel of the front sensor servo */
-#define REARSENSOR_MOVEMENT 3  /* PWM channel of the rear sensor servo */
+#define ENGINE 12  /* PWM channel of the engine controller */
+#define REAR_STEERING 0  /* PWM channel of the rear steering servo */
+#define FRONT_STEERING 14  /* PWM channel of the front steering servo */
+#define FRONTSENSOR_MOVEMENT 15  /* PWM channel of the front sensor servo */
+#define REARSENSOR_MOVEMENT 13  /* PWM channel of the rear sensor servo */
 
 // The following GPIO pin numbers are for use with WiringPi.
 // The numbers in comment are the respective standard GPIO pin numbers.
-#define REDLED 21  // 5
+#define REDLED 7  // 4
 
-#define TRIGRIGHT 4 // 23
-#define ECHORIGHT 5 // 24
+#define TRIGFRONT 26 // 12
+#define ECHOMID 23 // 13
 
-#define TRIGLEFT 2 // 27
-#define ECHOLEFT 3 // 22
-
-#define TRIGMID 26 // 12
-#define ECHOMID 27 // 16
-
-#define TRIGREAR 22 // 6
-#define ECHOREAR 23 // 13
+#define TRIGREAR 21 // 5
+#define ECHOREAR 22 // 6
 
 // engine speed
-#define SLOW_FORWARD -15
-#define SLOW_BACKWARD 20
+#define SLOW_FORWARD -6
+#define SLOW_BACKWARD 10
 #define STOP 0
 
 // servo positions (servos can have angles from -90 to 90 degree)
@@ -166,22 +160,12 @@ void roverControlIface_setRearSensorAngle(RoverControl* handle, int angle) {
 	logIt(msg);
 }
 
-int roverControlIface_getLeftFrontSensorDistanceInCm(RoverControl* handle) {
-	return getDistanceInCmWithLog(TRIGLEFT, ECHOLEFT, "Left Front");
-}
-
-int roverControlIface_getRightFrontSensorDistanceInCm(RoverControl* handle) {
-	return getDistanceInCmWithLog(TRIGRIGHT, ECHORIGHT, "Right Front");
-}
-
 int roverControlIface_getMidFrontSensorDistanceInCm(RoverControl* handle) {
-	return getDistanceInCmWithLog(TRIGMID, ECHOMID, "Mid Front");
+	return getDistanceInCmWithLog(TRIGFRONT, ECHOMID, "Mid Front");
 }
 
 int roverControlIface_getFrontSensorsDistanceLowerThan(RoverControl* handle, int minDistance) {
-	return roverControlIface_getRightFrontSensorDistanceInCm(handle) < minDistance
-	|| roverControlIface_getMidFrontSensorDistanceInCm(handle) < minDistance
-	|| roverControlIface_getLeftFrontSensorDistanceInCm(handle) < minDistance;
+	return roverControlIface_getMidFrontSensorDistanceInCm(handle) < minDistance;
 }
 
 int roverControlIface_getMidRearSensorDistanceInCm(RoverControl* handle) {
