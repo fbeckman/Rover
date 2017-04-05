@@ -1,4 +1,7 @@
 Eclipse neon.1
-Yakindu Statechart Tools 2.9.3
+Yakindu Statechart Tools 2.9.3 Community Edition
 GNU Toolchain for Raspberry Pi http://gnutoolchains.com/raspberry/  (4.9.2)
 
+Radio controlled model car (Rock Crawler 1:10)
+Raspberry Pi 2
+16 channel PWM Pi HAT
