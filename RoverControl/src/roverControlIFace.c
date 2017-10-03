@@ -202,6 +202,14 @@ int roverControlIfaceRedLED_getState(RoverControl* handle) {
 	return getPortValue(REDLED);
 }
 
+int roverControlIface_getExternalCommand(RoverControl *handle) {
+	int externalCommand = getExternalCommand();
+	char msg[50];
+	sprintf(msg, "External Command: %d", externalCommand);
+	logIt(msg);
+	return externalCommand;
+}
+
 int roverControlIface_rovercontrolSetup(RoverControl* handle) {
 	int rc = rovercontrolSetup();
 	if (rc < 0)

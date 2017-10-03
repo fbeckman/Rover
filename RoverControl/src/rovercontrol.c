@@ -4,6 +4,7 @@
 #include "../include/pca9685.h"
 #include "../include/pigpio.h"
 #include <stdio.h>
+#include <string.h>
 
 // Sensors
 // Ultrasonic Sensors
@@ -178,6 +179,17 @@ int getSpeedValue() {
 
 // End GPIO
 
+int getExternalCommand() {
+	FILE *externalCommandFile;
+	char buff[255];
+	externalCommandFile = fopen("/var/local/rovercontrol/state", "r");
+	fscanf(externalCommandFile, "%s", buff);
+	fclose(externalCommandFile);
+	if (strcmp(buff, "Stop") == 0) return 0;
+	if (strcmp(buff, "Start") == 0) return 1;
+	if (strcmp(buff, "Park") == 0) return 2;
+	return 0;
+}
 
 
 int rovercontrolSetup() {
