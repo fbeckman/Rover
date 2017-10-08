@@ -165,7 +165,17 @@ int roverControlIface_getMidFrontSensorDistanceInCm(RoverControl* handle) {
 }
 
 int roverControlIface_getFrontSensorsDistanceLowerThan(RoverControl* handle, int minDistance) {
-	return roverControlIface_getMidFrontSensorDistanceInCm(handle) < minDistance;
+//	int delayAfterMove = 100;
+//	setServo(FRONTSENSOR_MOVEMENT, -30); delay(delayAfterMove);
+	if (roverControlIface_getMidFrontSensorDistanceInCm(handle) < minDistance) return true;
+
+	//	setServo(FRONTSENSOR_MOVEMENT, 0); delay(delayAfterMove);
+//	if (roverControlIface_getMidFrontSensorDistanceInCm(handle) < minDistance) return true;
+//	setServo(FRONTSENSOR_MOVEMENT, 30); delay(delayAfterMove);
+//	if (roverControlIface_getMidFrontSensorDistanceInCm(handle) < minDistance) return true;
+//	setServo(FRONTSENSOR_MOVEMENT, 0); delay(delayAfterMove);
+//	if (roverControlIface_getMidFrontSensorDistanceInCm(handle) < minDistance) return true;
+	return false;
 }
 
 int roverControlIface_getMidRearSensorDistanceInCm(RoverControl* handle) {

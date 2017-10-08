@@ -180,6 +180,7 @@ int getSpeedValue() {
 // End GPIO
 
 int getExternalCommand() {
+//	return 1;
 	FILE *externalCommandFile;
 	char buff[255];
 	externalCommandFile = fopen("/var/local/rovercontrol/state", "r");
