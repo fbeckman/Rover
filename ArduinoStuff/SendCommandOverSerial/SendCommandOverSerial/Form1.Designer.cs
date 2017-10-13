@@ -36,13 +36,11 @@ namespace SendCommandOverSerial
             this.cmbSerialPorts = new System.Windows.Forms.ComboBox();
             this.btnStop = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.mousePad = new System.Windows.Forms.Panel();
-            this.pointer = new System.Windows.Forms.PictureBox();
             this.btnRemoteControl = new System.Windows.Forms.Button();
             this.lblX = new System.Windows.Forms.Label();
             this.lblY = new System.Windows.Forms.Label();
-            this.mousePad.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pointer)).BeginInit();
+            this.mousePad = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.mousePad)).BeginInit();
             this.SuspendLayout();
             // 
             // btnFreeDrive
@@ -71,7 +69,7 @@ namespace SendCommandOverSerial
             // cmbSerialPorts
             // 
             this.cmbSerialPorts.FormattingEnabled = true;
-            this.cmbSerialPorts.Location = new System.Drawing.Point(47, 340);
+            this.cmbSerialPorts.Location = new System.Drawing.Point(37, 307);
             this.cmbSerialPorts.Name = "cmbSerialPorts";
             this.cmbSerialPorts.Size = new System.Drawing.Size(206, 21);
             this.cmbSerialPorts.TabIndex = 2;
@@ -92,38 +90,16 @@ namespace SendCommandOverSerial
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(44, 324);
+            this.label1.Location = new System.Drawing.Point(34, 291);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(55, 13);
             this.label1.TabIndex = 4;
             this.label1.Tag = "Ser";
             this.label1.Text = "Serial Port";
             // 
-            // mousePad
-            // 
-            this.mousePad.BackColor = System.Drawing.Color.LightGray;
-            this.mousePad.Controls.Add(this.pointer);
-            this.mousePad.Cursor = System.Windows.Forms.Cursors.SizeAll;
-            this.mousePad.Location = new System.Drawing.Point(188, 38);
-            this.mousePad.Name = "mousePad";
-            this.mousePad.Size = new System.Drawing.Size(260, 260);
-            this.mousePad.TabIndex = 5;
-            this.mousePad.MouseLeave += new System.EventHandler(this.mousePad_MouseLeave);
-            this.mousePad.MouseMove += new System.Windows.Forms.MouseEventHandler(this.mousePad_MouseMove);
-            // 
-            // pointer
-            // 
-            this.pointer.BackColor = System.Drawing.Color.Black;
-            this.pointer.Enabled = false;
-            this.pointer.Location = new System.Drawing.Point(105, 132);
-            this.pointer.Name = "pointer";
-            this.pointer.Size = new System.Drawing.Size(16, 16);
-            this.pointer.TabIndex = 0;
-            this.pointer.TabStop = false;
-            // 
             // btnRemoteControl
             // 
-            this.btnRemoteControl.Location = new System.Drawing.Point(265, 304);
+            this.btnRemoteControl.Location = new System.Drawing.Point(270, 234);
             this.btnRemoteControl.Name = "btnRemoteControl";
             this.btnRemoteControl.Size = new System.Drawing.Size(108, 23);
             this.btnRemoteControl.TabIndex = 6;
@@ -134,7 +110,7 @@ namespace SendCommandOverSerial
             // lblX
             // 
             this.lblX.AutoSize = true;
-            this.lblX.Location = new System.Drawing.Point(284, 360);
+            this.lblX.Location = new System.Drawing.Point(282, 307);
             this.lblX.Name = "lblX";
             this.lblX.Size = new System.Drawing.Size(24, 13);
             this.lblX.TabIndex = 7;
@@ -143,21 +119,33 @@ namespace SendCommandOverSerial
             // lblY
             // 
             this.lblY.AutoSize = true;
-            this.lblY.Location = new System.Drawing.Point(340, 360);
+            this.lblY.Location = new System.Drawing.Point(338, 307);
             this.lblY.Name = "lblY";
             this.lblY.Size = new System.Drawing.Size(24, 13);
             this.lblY.TabIndex = 8;
             this.lblY.Text = "lblY";
             // 
+            // mousePad
+            // 
+            this.mousePad.BackColor = System.Drawing.Color.Silver;
+            this.mousePad.Location = new System.Drawing.Point(226, 30);
+            this.mousePad.Name = "mousePad";
+            this.mousePad.Size = new System.Drawing.Size(180, 180);
+            this.mousePad.TabIndex = 9;
+            this.mousePad.TabStop = false;
+            this.mousePad.MouseMove += mousePad_MouseMove;
+            this.mousePad.Paint += mousePad_Paint;
+
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(485, 398);
+            this.ClientSize = new System.Drawing.Size(464, 405);
+            this.Controls.Add(this.mousePad);
             this.Controls.Add(this.lblY);
             this.Controls.Add(this.lblX);
             this.Controls.Add(this.btnRemoteControl);
-            this.Controls.Add(this.mousePad);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnStop);
             this.Controls.Add(this.cmbSerialPorts);
@@ -166,8 +154,7 @@ namespace SendCommandOverSerial
             this.Name = "Form1";
             this.Text = "Form1";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmClosing);
-            this.mousePad.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pointer)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mousePad)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -182,11 +169,10 @@ namespace SendCommandOverSerial
         private ComboBox cmbSerialPorts;
         private Button btnStop;
         private Label label1;
-        private Panel mousePad;
         private Button btnRemoteControl;
         private Label lblX;
         private Label lblY;
-        private PictureBox pointer;
+        private PictureBox mousePad;
 
         
     }

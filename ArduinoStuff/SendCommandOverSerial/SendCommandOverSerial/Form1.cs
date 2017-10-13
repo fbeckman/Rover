@@ -9,18 +9,21 @@ namespace SendCommandOverSerial
     {
         SerialPort _serialPort;
 
+        Point mCenter;
+        Point mCurrent;
+
         public Form1()
         {
             InitializeComponent();
             mousePad.Cursor = Cursors.SizeAll;
 
-            lblX.Text = (pointer.Location.X - 8).ToString();
-            lblY.Text = (pointer.Location.Y - 8).ToString();
-
             var ports = SerialPort.GetPortNames();
             // Create a new SerialPort object with default settings.
             _serialPort = new SerialPort();
 
+            
+            mCenter = new Point(mousePad.DisplayRectangle.Left + mousePad.DisplayRectangle.Width / 2, mousePad.DisplayRectangle.Top + mousePad.DisplayRectangle.Height / 2);
+            mCurrent = mCenter;
             cmbSerialPorts.DataSource = ports;
         }
 
@@ -54,6 +57,16 @@ namespace SendCommandOverSerial
             WriteCommandToSerialPort("RemoteControl", _serialPort);
         }
 
+        private void mousePad_Paint(object sender, PaintEventArgs e)
+        {
+            Pen pen1 = new Pen(Color.Black);
+            pen1.Width = 12;
+            Pen pen2 = new Pen(Color.DarkSlateGray);
+            pen2.Width = 15;
+            e.Graphics.DrawLine(pen1, mCenter, mCurrent);
+            e.Graphics.DrawEllipse(pen2, mCurrent.X - 7, mCurrent.Y - 7, 14, 14);
+        }
+
         private void mousePad_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
         {
             // Update the mouse path that is drawn onto the Panel.
@@ -63,22 +76,11 @@ namespace SendCommandOverSerial
                 int speed = -e.Y + (mousePad.Size.Height / 2);
                 lblX.Text = direction.ToString();
                 lblY.Text = speed.ToString();
-
-                //lblX.Text = e.X.ToString();
-                //lblY.Text = e.Y.ToString();
-                pointer.Location = new Point(e.X - 8, e.Y - 8);
+                mCurrent = e.Location;
+                mousePad.Invalidate();
             }
             //WriteCommandToSerialPort(string.Format("Speed:{0}", speed), _serialPort);
             //WriteCommandToSerialPort(string.Format("Direction:{0}", direction), _serialPort);
-
-        }
-
-        private void mousePad_MouseLeave(object sender, System.EventArgs e) 
-        {
-            //lblX.Text = "0";
-            //lblY.Text = "0";
-            //WriteCommandToSerialPort("Speed:0", _serialPort);
-            //WriteCommandToSerialPort("Direction:0", _serialPort);
 
         }
 
