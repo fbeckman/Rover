@@ -165,7 +165,17 @@ int roverControlIface_getMidFrontSensorDistanceInCm(RoverControl* handle) {
 }
 
 int roverControlIface_getFrontSensorsDistanceLowerThan(RoverControl* handle, int minDistance) {
-	return roverControlIface_getMidFrontSensorDistanceInCm(handle) < minDistance;
+//	int delayAfterMove = 100;
+//	setServo(FRONTSENSOR_MOVEMENT, -30); delay(delayAfterMove);
+	if (roverControlIface_getMidFrontSensorDistanceInCm(handle) < minDistance) return true;
+
+	//	setServo(FRONTSENSOR_MOVEMENT, 0); delay(delayAfterMove);
+//	if (roverControlIface_getMidFrontSensorDistanceInCm(handle) < minDistance) return true;
+//	setServo(FRONTSENSOR_MOVEMENT, 30); delay(delayAfterMove);
+//	if (roverControlIface_getMidFrontSensorDistanceInCm(handle) < minDistance) return true;
+//	setServo(FRONTSENSOR_MOVEMENT, 0); delay(delayAfterMove);
+//	if (roverControlIface_getMidFrontSensorDistanceInCm(handle) < minDistance) return true;
+	return false;
 }
 
 int roverControlIface_getMidRearSensorDistanceInCm(RoverControl* handle) {
@@ -200,6 +210,14 @@ void roverControlIfaceRedLED_lEDOff(RoverControl* handle) {
 
 int roverControlIfaceRedLED_getState(RoverControl* handle) {
 	return getPortValue(REDLED);
+}
+
+int roverControlIface_getExternalCommand(RoverControl *handle) {
+	int externalCommand = getExternalCommand();
+	char msg[50];
+	sprintf(msg, "External Command: %d", externalCommand);
+	logIt(msg);
+	return externalCommand;
 }
 
 int roverControlIface_rovercontrolSetup(RoverControl* handle) {
