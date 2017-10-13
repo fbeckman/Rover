@@ -31,42 +31,145 @@ namespace SendCommandOverSerial
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnLEDOn = new System.Windows.Forms.Button();
-            this.btnLEDOff = new System.Windows.Forms.Button();
+            this.btnFreeDrive = new System.Windows.Forms.Button();
+            this.btnPark = new System.Windows.Forms.Button();
+            this.cmbSerialPorts = new System.Windows.Forms.ComboBox();
+            this.btnStop = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.mousePad = new System.Windows.Forms.Panel();
+            this.pointer = new System.Windows.Forms.PictureBox();
+            this.btnRemoteControl = new System.Windows.Forms.Button();
+            this.lblX = new System.Windows.Forms.Label();
+            this.lblY = new System.Windows.Forms.Label();
+            this.mousePad.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pointer)).BeginInit();
             this.SuspendLayout();
             // 
-            // btnLEDOn
+            // btnFreeDrive
             // 
-            this.btnLEDOn.Location = new System.Drawing.Point(47, 40);
-            this.btnLEDOn.Name = "btnLEDOn";
-            this.btnLEDOn.Size = new System.Drawing.Size(76, 38);
-            this.btnLEDOn.TabIndex = 0;
-            this.btnLEDOn.Text = "LED ON";
-            this.btnLEDOn.UseVisualStyleBackColor = true;
-            this.btnLEDOn.Click += new System.EventHandler(this.btnLEDOn_Click);
+            this.btnFreeDrive.BackColor = System.Drawing.Color.Lime;
+            this.btnFreeDrive.Location = new System.Drawing.Point(24, 102);
+            this.btnFreeDrive.Name = "btnFreeDrive";
+            this.btnFreeDrive.Size = new System.Drawing.Size(76, 38);
+            this.btnFreeDrive.TabIndex = 0;
+            this.btnFreeDrive.Text = "Free Drive";
+            this.btnFreeDrive.UseVisualStyleBackColor = false;
+            this.btnFreeDrive.Click += new System.EventHandler(this.btnFreeDrive_Click);
             // 
-            // btnLEDOff
+            // btnPark
             // 
-            this.btnLEDOff.Location = new System.Drawing.Point(47, 96);
-            this.btnLEDOff.Name = "btnLEDOff";
-            this.btnLEDOff.Size = new System.Drawing.Size(76, 39);
-            this.btnLEDOff.TabIndex = 1;
-            this.btnLEDOff.Text = "LED OFF";
-            this.btnLEDOff.UseVisualStyleBackColor = true;
-            this.btnLEDOff.Click += new System.EventHandler(this.btnLEDOff_Click);
+            this.btnPark.BackColor = System.Drawing.Color.Blue;
+            this.btnPark.ForeColor = System.Drawing.Color.White;
+            this.btnPark.Location = new System.Drawing.Point(24, 146);
+            this.btnPark.Name = "btnPark";
+            this.btnPark.Size = new System.Drawing.Size(76, 39);
+            this.btnPark.TabIndex = 1;
+            this.btnPark.Text = "Park";
+            this.btnPark.UseVisualStyleBackColor = false;
+            this.btnPark.Click += new System.EventHandler(this.btnPark_Click);
+            // 
+            // cmbSerialPorts
+            // 
+            this.cmbSerialPorts.FormattingEnabled = true;
+            this.cmbSerialPorts.Location = new System.Drawing.Point(47, 340);
+            this.cmbSerialPorts.Name = "cmbSerialPorts";
+            this.cmbSerialPorts.Size = new System.Drawing.Size(206, 21);
+            this.cmbSerialPorts.TabIndex = 2;
+            this.cmbSerialPorts.SelectedIndexChanged += new System.EventHandler(this.cmbSerialPorts_SelectedIndexChanged);
+            // 
+            // btnStop
+            // 
+            this.btnStop.BackColor = System.Drawing.Color.Red;
+            this.btnStop.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnStop.Location = new System.Drawing.Point(24, 30);
+            this.btnStop.Name = "btnStop";
+            this.btnStop.Size = new System.Drawing.Size(108, 51);
+            this.btnStop.TabIndex = 3;
+            this.btnStop.Text = "&Stop";
+            this.btnStop.UseVisualStyleBackColor = false;
+            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(44, 324);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(55, 13);
+            this.label1.TabIndex = 4;
+            this.label1.Tag = "Ser";
+            this.label1.Text = "Serial Port";
+            // 
+            // mousePad
+            // 
+            this.mousePad.BackColor = System.Drawing.Color.LightGray;
+            this.mousePad.Controls.Add(this.pointer);
+            this.mousePad.Cursor = System.Windows.Forms.Cursors.SizeAll;
+            this.mousePad.Location = new System.Drawing.Point(188, 38);
+            this.mousePad.Name = "mousePad";
+            this.mousePad.Size = new System.Drawing.Size(260, 260);
+            this.mousePad.TabIndex = 5;
+            this.mousePad.MouseLeave += new System.EventHandler(this.mousePad_MouseLeave);
+            this.mousePad.MouseMove += new System.Windows.Forms.MouseEventHandler(this.mousePad_MouseMove);
+            // 
+            // pointer
+            // 
+            this.pointer.BackColor = System.Drawing.Color.Black;
+            this.pointer.Enabled = false;
+            this.pointer.Location = new System.Drawing.Point(105, 132);
+            this.pointer.Name = "pointer";
+            this.pointer.Size = new System.Drawing.Size(16, 16);
+            this.pointer.TabIndex = 0;
+            this.pointer.TabStop = false;
+            // 
+            // btnRemoteControl
+            // 
+            this.btnRemoteControl.Location = new System.Drawing.Point(265, 304);
+            this.btnRemoteControl.Name = "btnRemoteControl";
+            this.btnRemoteControl.Size = new System.Drawing.Size(108, 23);
+            this.btnRemoteControl.TabIndex = 6;
+            this.btnRemoteControl.Text = "Remote Control";
+            this.btnRemoteControl.UseVisualStyleBackColor = true;
+            this.btnRemoteControl.Click += new System.EventHandler(this.btnRemoteControl_Click);
+            // 
+            // lblX
+            // 
+            this.lblX.AutoSize = true;
+            this.lblX.Location = new System.Drawing.Point(284, 360);
+            this.lblX.Name = "lblX";
+            this.lblX.Size = new System.Drawing.Size(24, 13);
+            this.lblX.TabIndex = 7;
+            this.lblX.Text = "lblX";
+            // 
+            // lblY
+            // 
+            this.lblY.AutoSize = true;
+            this.lblY.Location = new System.Drawing.Point(340, 360);
+            this.lblY.Name = "lblY";
+            this.lblY.Size = new System.Drawing.Size(24, 13);
+            this.lblY.TabIndex = 8;
+            this.lblY.Text = "lblY";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 261);
-            this.Controls.Add(this.btnLEDOff);
-            this.Controls.Add(this.btnLEDOn);
+            this.ClientSize = new System.Drawing.Size(485, 398);
+            this.Controls.Add(this.lblY);
+            this.Controls.Add(this.lblX);
+            this.Controls.Add(this.btnRemoteControl);
+            this.Controls.Add(this.mousePad);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.btnStop);
+            this.Controls.Add(this.cmbSerialPorts);
+            this.Controls.Add(this.btnPark);
+            this.Controls.Add(this.btnFreeDrive);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmClosing);
+            this.mousePad.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pointer)).EndInit();
             this.ResumeLayout(false);
-
-            this.FormClosing += new FormClosingEventHandler(this.frmClosing);
+            this.PerformLayout();
 
         }
 
@@ -74,8 +177,18 @@ namespace SendCommandOverSerial
 
         #endregion
 
-        private System.Windows.Forms.Button btnLEDOn;
-        private System.Windows.Forms.Button btnLEDOff;
+        private System.Windows.Forms.Button btnFreeDrive;
+        private System.Windows.Forms.Button btnPark;
+        private ComboBox cmbSerialPorts;
+        private Button btnStop;
+        private Label label1;
+        private Panel mousePad;
+        private Button btnRemoteControl;
+        private Label lblX;
+        private Label lblY;
+        private PictureBox pointer;
+
+        
     }
 }
 
