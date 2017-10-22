@@ -13,6 +13,7 @@ extern int getSpeedValue();
 extern int getFrontSteeringValue();
 extern int getRearSteeringValue();
 extern int getExternalCommand();
+extern int getExternalParameter(char* parameterName);
 #ifdef __cplusplus
 }
 #endif

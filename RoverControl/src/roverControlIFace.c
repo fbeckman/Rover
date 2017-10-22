@@ -34,6 +34,9 @@
 int speed = STOP;
 int heading = NEUTRAL_ANGLE;
 
+int frontHeading = NEUTRAL_ANGLE;
+int rearHeading = NEUTRAL_ANGLE;
+
 int loggingEnabled = 1;
 
 // Helpers
@@ -63,141 +66,107 @@ int getDistanceInCmWithLog(int trig, int echo, char *logInformation) {
 }
 // End Helpers
 
-//
+//predefined functions for engine control
 void roverControlIface_slowForward(RoverControl* handle) {
-	setServo(ENGINE, SLOW_FORWARD);
-	speed = SLOW_FORWARD;
+	handle->ifaceEngine.speed = handle->iface.slowForward;
 	logIt("Slow forward");
 }
 
 void roverControlIface_slowBackward(RoverControl* handle) {
-	setServo(ENGINE, SLOW_BACKWARD);
-	speed = SLOW_BACKWARD;
+	handle->ifaceEngine.speed = handle->iface.slowBackward;
 	logIt("Slow backward");
 }
 
-void roverControlIface_setSpeedGivenByRC(RoverControl* handle) {
-	speed = getSpeedValue();
-	setServo(ENGINE, -speed);
-	char msg[50];
-	sprintf(msg, "Speed set by RC: %d", speed);
-	logIt(msg);
-}
-
 void roverControlIface_engineStop(RoverControl* handle) {
-	setServo(ENGINE, STOP);
-	speed = STOP;
+	handle->ifaceEngine.speed = STOP;
 	logIt("Engine: stop");
 }
 
-void roverControlIface_straight(RoverControl* handle) {
-	setServo(REAR_STEERING, NEUTRAL_ANGLE);
-	setServo(FRONT_STEERING, NEUTRAL_ANGLE);
-	heading = NEUTRAL_ANGLE;
-
-	logIt("Heading: straight");
-}
-		
-void roverControlIface_left(RoverControl* handle, int angle) {
-	setServo(REAR_STEERING, limitedSteeringAngle(-angle));
-	setServo(FRONT_STEERING, limitedSteeringAngle(angle));
-	heading = limitedSteeringAngle(angle);
-
-	char msg[50];
-	sprintf(msg, "Heading: left %d degrees", angle);
-	logIt(msg);
-}
-		
-void roverControlIface_right(RoverControl* handle, int angle) {
-	setServo(REAR_STEERING, limitedSteeringAngle(angle));
-	setServo(FRONT_STEERING, limitedSteeringAngle(-angle));
-	heading = limitedSteeringAngle(-angle);
-
-	char msg[50];
-	sprintf(msg, "Heading: right %d degrees", angle);
-	logIt(msg);
-}
-
-void roverControlIface_setFrontHeadingGivenByRC(RoverControl* handle) {
-	heading = getFrontSteeringValue();
-	setServo(FRONT_STEERING, limitedSteeringAngle(-heading));
-	char msg[50];
-	sprintf(msg, "Front heading set by RC: %d", heading);
-	logIt(msg);
-}
-
-void roverControlIface_setRearHeadingGivenByRC(RoverControl* handle) {
-	heading = getRearSteeringValue();
-	setServo(REAR_STEERING, limitedSteeringAngle(-heading));
-	char msg[50];
-	sprintf(msg, "Rear heading set by RC: %d", heading);
-	logIt(msg);
-}
-		
-void roverControlIface_turnTo(RoverControl* handle, int angle) {
-	setServo(REAR_STEERING, limitedSteeringAngle(-angle));
-	setServo(FRONT_STEERING, limitedSteeringAngle(angle));
-	heading = limitedSteeringAngle(angle);
-
+//predefined functions for steering control
+void roverControlIfaceSteering_turnTo(RoverControl* handle, int angle) {
+	handle->ifaceSteering.frontHeading = angle;
+	handle->ifaceSteering.rearHeading = -angle;
 	char msg[50];
 	sprintf(msg, "Heading: %d degrees", angle);
 	logIt(msg);
 }
 
+void roverControlIfaceSteering_setFrontHeading(RoverControl* handle, int angle) {
+	handle->ifaceSteering.frontHeading = angle;
+	char msg[50];
+	sprintf(msg, "Heading: %d degrees", angle);
+	logIt(msg);
+}
+
+void roverControlIfaceSteering_setRearHeading(RoverControl* handle, int angle) {
+	handle->ifaceSteering.rearHeading = angle;
+	char msg[50];
+	sprintf(msg, "Heading: %d degrees", angle);
+	logIt(msg);
+}
+
+void roverControlIface_straight(RoverControl* handle) {
+	handle->ifaceSteering.frontHeading = NEUTRAL_ANGLE;
+	handle->ifaceSteering.rearHeading = NEUTRAL_ANGLE;
+	logIt("Heading: straight");
+}
+
+void roverControlIface_left(RoverControl* handle, int angle) {
+	handle->ifaceSteering.frontHeading = angle;
+	handle->ifaceSteering.rearHeading = -angle;
+	char msg[50];
+	sprintf(msg, "Heading: left %d degrees", angle);
+	logIt(msg);
+}
+
+void roverControlIface_right(RoverControl* handle, int angle) {
+	handle->ifaceSteering.frontHeading = -angle;
+	handle->ifaceSteering.rearHeading = angle;
+	char msg[50];
+	sprintf(msg, "Heading: right %d degrees", angle);
+	logIt(msg);
+}
+
+//predefined functions to move the sensor servos
 void roverControlIface_setMidFrontSensorAngle(RoverControl* handle, int angle) {
-	setServo(FRONTSENSOR_MOVEMENT, angle);
-
+	handle->ifaceSensors.midFrontSensorAngle = angle;
 	char msg[50];
-	sprintf(msg, "Set Mid Front Sensor Angle: %d", angle);
+	sprintf(msg, "Set Mid Front Sensor Angle: %d", handle->ifaceSensors.midFrontSensorAngle);
 	logIt(msg);
 }
 
-void roverControlIface_setRearSensorAngle(RoverControl* handle, int angle) {
-	setServo(REARSENSOR_MOVEMENT, angle);
-
+void roverControlIface_setMidRearSensorAngle(RoverControl* handle, int angle) {
+	handle->ifaceSensors.midRearSensorAngle = angle;
 	char msg[50];
-	sprintf(msg, "Set Rear Sensor Angle: %d", angle);
+	sprintf(msg, "Set Rear Sensor Angle: %d", handle->ifaceSensors.midRearSensorAngle);
 	logIt(msg);
 }
 
-int roverControlIface_getMidFrontSensorDistanceInCm(RoverControl* handle) {
-	return getDistanceInCmWithLog(TRIGFRONT, ECHOMID, "Mid Front");
-}
-
-int roverControlIface_getFrontSensorsDistanceLowerThan(RoverControl* handle, int minDistance) {
-//	int delayAfterMove = 100;
-//	setServo(FRONTSENSOR_MOVEMENT, -30); delay(delayAfterMove);
-	if (roverControlIface_getMidFrontSensorDistanceInCm(handle) < minDistance) return true;
-
-	//	setServo(FRONTSENSOR_MOVEMENT, 0); delay(delayAfterMove);
-//	if (roverControlIface_getMidFrontSensorDistanceInCm(handle) < minDistance) return true;
-//	setServo(FRONTSENSOR_MOVEMENT, 30); delay(delayAfterMove);
-//	if (roverControlIface_getMidFrontSensorDistanceInCm(handle) < minDistance) return true;
-//	setServo(FRONTSENSOR_MOVEMENT, 0); delay(delayAfterMove);
-//	if (roverControlIface_getMidFrontSensorDistanceInCm(handle) < minDistance) return true;
-	return false;
-}
-
-int roverControlIface_getMidRearSensorDistanceInCm(RoverControl* handle) {
-	return getDistanceInCmWithLog(TRIGREAR, ECHOREAR, "Mid Rear");
-}
-
-int roverControlIface_getSpeed(RoverControl* handle) {
-	int speedValue = getSpeedValue();
+//functions for setting speed and direction by reading data from the remote control receiver
+void roverControlIface_setSpeedGivenByRC(RoverControl* handle) {
+	handle->ifaceEngine.speed = -getSpeedValue();
 	char msg[50];
-	sprintf(msg, "Speed: %d", speedValue);
+	sprintf(msg, "Speed set by RC: %d", speed);
 	logIt(msg);
-	return speedValue;
 }
 
-int roverControlIface_getHeading(RoverControl* handle) {
-	heading = getFrontSteeringValue();
+void roverControlIface_setFrontHeadingGivenByRC(RoverControl* handle) {
+	handle->ifaceSteering.frontHeading = getFrontSteeringValue();
 	char msg[50];
-	sprintf(msg, "Heading: %d", heading);
+	sprintf(msg, "Front heading set by RC: %d", frontHeading);
 	logIt(msg);
-	return heading;
 }
 
+void roverControlIface_setRearHeadingGivenByRC(RoverControl* handle) {
+	handle->ifaceSteering.rearHeading = getRearSteeringValue();
+	char msg[50];
+	sprintf(msg, "Rear heading set by RC: %d", rearHeading);
+	logIt(msg);
+}
+
+
+
+//TODO
 void roverControlIfaceRedLED_lEDOn(RoverControl* handle) {
 	setPortTo0(REDLED);
 	logIt("Set red LED On");
@@ -212,12 +181,46 @@ int roverControlIfaceRedLED_getState(RoverControl* handle) {
 	return getPortValue(REDLED);
 }
 
-int roverControlIface_getExternalCommand(RoverControl *handle) {
-	int externalCommand = getExternalCommand();
+
+//get command to execute from file (e.g written by Web Service)
+void roverControlIface_getExternalCommand(RoverControl *handle) {
+	handle->iface.externalCommand = getExternalCommand();
 	char msg[50];
-	sprintf(msg, "External Command: %d", externalCommand);
+	sprintf(msg, "External Command: %d", handle->iface.externalCommand);
 	logIt(msg);
-	return externalCommand;
+}
+
+//get external parameter values from file
+void roverControlIface_getExternalParameters(RoverControl *handle) {
+	char msg[50];
+	handle->iface.minFrontDistance = getExternalParameter("minFrontDistance");
+	sprintf(msg, "External Parameter minFrontDistance: %d", handle->iface.minFrontDistance);
+	logIt(msg);
+	handle->iface.minRearDistance = getExternalParameter("minRearDistance");
+	sprintf(msg, "External Parameter minRearDistance: %d", handle->iface.minRearDistance);
+	logIt(msg);
+	handle->iface.slowForward = getExternalParameter("slowForward");
+	sprintf(msg, "External Parameter slowForward: %d", handle->iface.slowForward);
+	logIt(msg);
+	handle->iface.slowBackward = getExternalParameter("slowBackward");
+	sprintf(msg, "External Parameter slowBackward: %d", handle->iface.slowBackward);
+	logIt(msg);
+
+}
+
+//basic sensors read
+void roverControlIface_readFromSensors(RoverControl *handle) {
+	handle->ifaceSensors.midFrontSensorDistanceInCm = getDistanceInCmWithLog(TRIGFRONT, ECHOMID, "Mid Front");
+	handle->ifaceSensors.midRearSensorDistanceInCm = getDistanceInCmWithLog(TRIGREAR, ECHOREAR, "Mid Rear");
+}
+
+//basic actuators write
+void roverControlIface_writeToActuators(RoverControl *handle) {
+	setServo(FRONT_STEERING, limitedSteeringAngle(handle->ifaceSteering.frontHeading));
+	setServo(REAR_STEERING, limitedSteeringAngle(handle->ifaceSteering.rearHeading));
+	setServo(FRONTSENSOR_MOVEMENT, handle->ifaceSensors.midFrontSensorAngle);
+	setServo(REARSENSOR_MOVEMENT, handle->ifaceSensors.midRearSensorAngle);
+	setServo(ENGINE, handle->ifaceEngine.speed);
 }
 
 int roverControlIface_rovercontrolSetup(RoverControl* handle) {
@@ -228,8 +231,8 @@ int roverControlIface_rovercontrolSetup(RoverControl* handle) {
 	roverControlIfaceRedLED_lEDOff(handle);
 	roverControlIface_engineStop(handle);
 	roverControlIface_straight(handle);
-	roverControlIface_setMidFrontSensorAngle(handle, 0);
-	roverControlIface_setRearSensorAngle(handle, 0);
+	handle->ifaceSensors.midFrontSensorAngle = 0;
+	handle->ifaceSensors.midRearSensorAngle = 0;
 
 	return 0;
 }

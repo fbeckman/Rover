@@ -32,9 +32,11 @@ void setup() {
 	roverControl_enter(&handle);
 }
 
-#define CYCLE_PERIOD (10)
+
+#define CYCLE_PERIOD (10) //ms
 static unsigned long cycle_count = 0L;
 static unsigned long last_cycle_time = 0L;
+
 
 void loop() {
 	unsigned long current_millies = millis();
@@ -42,7 +44,11 @@ void loop() {
 	if ( cycle_count == 0L || (current_millies >= last_cycle_time + CYCLE_PERIOD) ) {
 		sc_timer_service_proceed(&timer_service, current_millies - last_cycle_time);
 		last_cycle_time = current_millies;
+		if (cycle_count % 10 == 0) roverControlIface_getExternalCommand(&handle);
+		if (cycle_count % 100 == 0) roverControlIface_getExternalParameters(&handle);
+		if (cycle_count % 2 == 0) roverControlIface_readFromSensors(&handle);
 		roverControl_runCycle(&handle);
+		if (cycle_count % 5 == 0) roverControlIface_writeToActuators(&handle);
 		cycle_count++;
 	}
 }
