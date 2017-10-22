@@ -47,6 +47,7 @@ void loop() {
 		if (cycle_count % 10 == 0) roverControlIface_getExternalCommand(&handle);
 		if (cycle_count % 100 == 0) roverControlIface_getExternalParameters(&handle);
 		if (cycle_count % 2 == 0) roverControlIface_readFromSensors(&handle);
+		if (cycle_count % 1 == 0) roverControlIface_readFromRemoteControl(&handle);
 		roverControl_runCycle(&handle);
 		if (cycle_count % 5 == 0) roverControlIface_writeToActuators(&handle);
 		cycle_count++;
