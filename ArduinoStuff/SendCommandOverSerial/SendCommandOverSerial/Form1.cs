@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.IO.Ports;
 using System.Windows.Forms;
 
@@ -8,26 +9,22 @@ namespace SendCommandOverSerial
     {
         SerialPort _serialPort;
 
+        Point mCenter;
+        Point mCurrent;
+
         public Form1()
         {
             InitializeComponent();
+            mousePad.Cursor = Cursors.SizeAll;
 
-
+            var ports = SerialPort.GetPortNames();
             // Create a new SerialPort object with default settings.
             _serialPort = new SerialPort();
 
-            // Allow the user to set the appropriate properties.
-            _serialPort.PortName = "COM7";
-            _serialPort.BaudRate = 115200;
-            _serialPort.Parity = Parity.None;
-            _serialPort.DataBits = 8;
-            _serialPort.StopBits = StopBits.One;
-            _serialPort.Handshake = Handshake.None;
-
-            // Set the read/write timeouts
-            //_serialPort.ReadTimeout = 500;
-            //_serialPort.WriteTimeout = 500;
-            _serialPort.Open();
+            
+            mCenter = new Point(mousePad.DisplayRectangle.Left + mousePad.DisplayRectangle.Width / 2, mousePad.DisplayRectangle.Top + mousePad.DisplayRectangle.Height / 2);
+            mCurrent = mCenter;
+            cmbSerialPorts.DataSource = ports;
         }
 
         private void frmClosing(object sender, EventArgs e)
@@ -40,15 +37,74 @@ namespace SendCommandOverSerial
             _serialPort.Write(command);
         }
 
-        private void btnLEDOff_Click(object sender, EventArgs e)
+        private void btnPark_Click(object sender, EventArgs e)
         {
-            WriteCommandToSerialPort("LEDOFF", _serialPort);
+            WriteCommandToSerialPort("Park", _serialPort);
         }
 
-        private void btnLEDOn_Click(object sender, EventArgs e)
+        private void btnStop_Click(object sender, EventArgs e)
         {
-            WriteCommandToSerialPort("LEDON", _serialPort);
+            WriteCommandToSerialPort("Stop", _serialPort);
         }
 
+        private void btnFreeDrive_Click(object sender, EventArgs e)
+        {
+            WriteCommandToSerialPort("FreeDrive", _serialPort);
+        }
+
+        private void btnRemoteControl_Click(object sender, EventArgs e)
+        {
+            WriteCommandToSerialPort("RemoteControl", _serialPort);
+        }
+
+        private void mousePad_Paint(object sender, PaintEventArgs e)
+        {
+            Pen pen1 = new Pen(Color.Black);
+            pen1.Width = 12;
+            Pen pen2 = new Pen(Color.DarkSlateGray);
+            pen2.Width = 15;
+            e.Graphics.DrawLine(pen1, mCenter, mCurrent);
+            e.Graphics.DrawEllipse(pen2, mCurrent.X - 7, mCurrent.Y - 7, 14, 14);
+        }
+
+        private void mousePad_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            // Update the mouse path that is drawn onto the Panel.
+            if (e.Button == MouseButtons.Left)
+            {
+                int direction = e.X - (mousePad.Size.Width / 2);
+                int speed = -e.Y + (mousePad.Size.Height / 2);
+                lblX.Text = direction.ToString();
+                lblY.Text = speed.ToString();
+                mCurrent = e.Location;
+                mousePad.Invalidate();
+            }
+            //WriteCommandToSerialPort(string.Format("Speed:{0}", speed), _serialPort);
+            //WriteCommandToSerialPort(string.Format("Direction:{0}", direction), _serialPort);
+
+        }
+
+        private void cmbSerialPorts_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Allow the user to set the appropriate properties.
+            _serialPort.Close();
+            _serialPort.PortName = cmbSerialPorts.SelectedItem.ToString();
+            _serialPort.BaudRate = 115200;
+            _serialPort.Parity = Parity.None;
+            _serialPort.DataBits = 8;
+            _serialPort.StopBits = StopBits.One;
+            _serialPort.Handshake = Handshake.None;
+            // Set the read/write timeouts
+            //_serialPort.ReadTimeout = 500;
+            //_serialPort.WriteTimeout = 500;
+            try
+            {
+                _serialPort.Open();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }
