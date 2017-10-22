@@ -205,7 +205,6 @@ void roverControlIface_getExternalParameters(RoverControl *handle) {
 	handle->iface.slowBackward = getExternalParameter("slowBackward");
 	sprintf(msg, "External Parameter slowBackward: %d", handle->iface.slowBackward);
 	logIt(msg);
-
 }
 
 //basic sensors read
