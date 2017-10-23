@@ -219,17 +219,21 @@ int getExternalParameter(char* parameterName) {
 
 int rovercontrolSetup() {
 	int rc = wiringPiSetup();
+	printf("wiringPiSetup() : %d\n", rc);
 	if (rc < 0)
 		return rc;
 	rc = pwmSetup();
+	printf("pwmSetup() : %d\n", rc);
 	if (rc < 0)
 		return rc;
 	rc = gpioInitialise();
+	printf("gpioInitialise() : %d\n", rc);
 	if (rc <0)
 		return rc;
 	gpioSetAlertFunc(21, frontSteeringPWM);
 	gpioSetAlertFunc(20, rearSteeringPWM);
 	gpioSetAlertFunc(19, speedPWM);
+	printf("Setup successful\n");
 	return 0;
 }
 
