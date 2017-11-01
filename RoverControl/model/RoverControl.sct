@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmlns:sgraph="http://www.yakindu.org/sct/sgraph/2.0.0">
-  <sgraph:Statechart xmi:id="_U-22YKRSEeaOH542RhpAPw" specification="interface:&#xD;&#xA;&#x9;//events used for switching between regions&#x9;&#xD;&#xA;&#x9;in event stopAll&#xD;&#xA;&#x9;in event blinkyOn&#xD;&#xA;&#x9;in event blinkyOff&#xD;&#xA;&#x9;in event startParking&#xD;&#xA;&#x9;in event startExploring&#xD;&#xA;&#x9;in event startGetRCValues&#xD;&#xA;&#x9;&#xD;&#xA;&#x9;//variable for parking&#x9;&#xD;&#xA;&#x9;&#xD;&#xA;&#x9;//externally modifiable parameters&#xD;&#xA;&#x9;var minFrontDistance : integer&#xD;&#xA;&#x9;var minRearDistance : integer&#xD;&#xA;&#x9;var slowForward : integer&#xD;&#xA;&#x9;var slowBackward : integer&#xD;&#xA;&#x9;var minLengthParkingSpace : integer&#xD;&#xA;&#x9;var minWidthParkingSpace : integer&#xD;&#xA;&#xD;&#xA;&#x9;//global&#xD;&#xA;&#x9;var setupState : integer&#xD;&#xA;&#x9;var externalCommand : integer&#xD;&#xA;&#x9;var lastExternalCommand : integer&#xD;&#xA;&#xD;&#xA;&#x9;operation rovercontrolSetup() : integer&#xD;&#xA;&#x9;&#xD;&#xA;interface sensors :&#xD;&#xA;&#x9;var midFrontSensorDistanceInCm : integer&#xD;&#xA;&#x9;var midRearSensorDistanceInCm : integer&#xD;&#xA;&#x9;var midFrontSensorAngle : integer&#xD;&#xA;&#x9;var midRearSensorAngle : integer&#xD;&#xA;&#x9;var midFrontSensorAngleInterval : integer&#xD;&#xA;&#xD;&#xA;interface engine :&#xD;&#xA;&#x9;var speed : integer&#xD;&#xA;&#x9;&#xD;&#xA;&#x9;operation stop() : void&#xD;&#xA;&#x9;operation slowForward() : void&#xD;&#xA;&#x9;operation slowBackward() : void&#xD;&#xA;&#xD;&#xA;interface steering :&#xD;&#xA;&#x9;var rearHeading : integer&#xD;&#xA;&#x9;var frontHeading : integer&#xD;&#xA;&#x9;&#xD;&#xA;&#x9;operation turnTo(angle:integer) : void&#xD;&#xA;&#x9;operation straight() : void&#xD;&#xA;&#x9;operation right(angle:integer):void&#xD;&#xA;&#x9;operation left(angle:integer):void&#xD;&#xA;&#x9;&#xD;&#xA;interface remoteControl :&#xD;&#xA;&#x9;var speed : integer&#xD;&#xA;&#x9;var frontHeading : integer&#xD;&#xA;&#x9;var rearHeading : integer&#xD;&#xA;&#xD;&#xA;interface directionSearcher :&#xD;&#xA;&#x9;var newDirection : integer&#xD;&#xA;&#x9;var currentDegree : integer&#xD;&#xA;&#x9;var maxDistanceFound : integer&#xD;&#xA;&#x9;var currentDistance : integer&#xD;&#xA;&#x9;&#xD;&#xA;interface redLED :&#xD;&#xA;&#x9;operation LEDOff() : void&#xD;&#xA;&#x9;operation LEDOn(): void&#xD;&#xA;&#x9;operation getState() :  string&#xD;&#xA;&#x9;&#xD;&#xA;interface parking :&#xD;&#xA;&#x9;var lastDistance : integer&#xD;&#xA;&#x9;var length : integer&#xD;&#xA;" name="RoverControl">
+  <sgraph:Statechart xmi:id="_U-22YKRSEeaOH542RhpAPw" specification="interface:&#xD;&#xA;&#x9;//events used for switching between regions&#x9;&#xD;&#xA;&#x9;in event stopAll&#xD;&#xA;&#x9;in event blinkyOn&#xD;&#xA;&#x9;in event blinkyOff&#xD;&#xA;&#x9;in event startParking&#xD;&#xA;&#x9;in event startExploring&#xD;&#xA;&#x9;in event startDriveByRC&#xD;&#xA;&#x9;&#xD;&#xA;&#x9;//variable for parking&#x9;&#xD;&#xA;&#x9;&#xD;&#xA;&#x9;//externally modifiable parameters&#xD;&#xA;&#x9;var minFrontDistance : integer&#xD;&#xA;&#x9;var minRearDistance : integer&#xD;&#xA;&#x9;var slowForward : integer&#xD;&#xA;&#x9;var slowBackward : integer&#xD;&#xA;&#x9;var minLengthParkingSpace : integer&#xD;&#xA;&#x9;var minWidthParkingSpace : integer&#xD;&#xA;&#xD;&#xA;&#x9;//global&#xD;&#xA;&#x9;var setupState : integer&#xD;&#xA;&#x9;var externalCommand : integer&#xD;&#xA;&#x9;var lastExternalCommand : integer&#xD;&#xA;&#xD;&#xA;&#x9;operation rovercontrolSetup() : integer&#xD;&#xA;&#x9;&#xD;&#xA;interface sensors :&#xD;&#xA;&#x9;var midFrontSensorDistanceInCm : integer&#xD;&#xA;&#x9;var midRearSensorDistanceInCm : integer&#xD;&#xA;&#x9;var midFrontSensorAngle : integer&#xD;&#xA;&#x9;var midRearSensorAngle : integer&#xD;&#xA;&#x9;var midFrontSensorAngleInterval : integer&#xD;&#xA;&#xD;&#xA;interface engine :&#xD;&#xA;&#x9;var speed : integer&#xD;&#xA;&#x9;&#xD;&#xA;&#x9;operation stop() : void&#xD;&#xA;&#x9;operation slowForward() : void&#xD;&#xA;&#x9;operation slowBackward() : void&#xD;&#xA;&#xD;&#xA;interface steering :&#xD;&#xA;&#x9;var rearHeading : integer&#xD;&#xA;&#x9;var frontHeading : integer&#xD;&#xA;&#x9;&#xD;&#xA;&#x9;operation turnTo(angle:integer) : void&#xD;&#xA;&#x9;operation straight() : void&#xD;&#xA;&#x9;operation right(angle:integer):void&#xD;&#xA;&#x9;operation left(angle:integer):void&#xD;&#xA;&#x9;&#xD;&#xA;interface remoteControl :&#xD;&#xA;&#x9;var speed : integer&#xD;&#xA;&#x9;var frontHeading : integer&#xD;&#xA;&#x9;var rearHeading : integer&#xD;&#xA;&#xD;&#xA;interface directionSearcher :&#xD;&#xA;&#x9;var newDirection : integer&#xD;&#xA;&#x9;var currentDegree : integer&#xD;&#xA;&#x9;var maxDistanceFound : integer&#xD;&#xA;&#x9;var currentDistance : integer&#xD;&#xA;&#x9;&#xD;&#xA;interface redLED :&#xD;&#xA;&#x9;operation LEDOff() : void&#xD;&#xA;&#x9;operation LEDOn(): void&#xD;&#xA;&#x9;operation getState() :  string&#xD;&#xA;&#x9;&#xD;&#xA;interface parking :&#xD;&#xA;&#x9;var lastDistance : integer&#xD;&#xA;&#x9;var length : integer&#xD;&#xA;" name="RoverControl">
     <regions xmi:id="_mGIXILP6EeaJQL6T49rwSA" name="Main">
       <vertices xsi:type="sgraph:Entry" xmi:id="_mGQS8LP6EeaJQL6T49rwSA">
         <outgoingTransitions xmi:id="_mGQS-bP6EeaJQL6T49rwSA" specification="" target="_mGMonLP6EeaJQL6T49rwSA"/>
@@ -20,7 +20,7 @@
         <outgoingTransitions xmi:id="_PQUSoKhCEeesOMukSDuXkg" specification="[externalCommand== 2] / &#xD;&#xA;raise stopAll;&#xD;&#xA;raise startParking" target="_lwh3kKg_EeesOMukSDuXkg"/>
         <outgoingTransitions xmi:id="_kL30oKhEEeesOMukSDuXkg" specification="[externalCommand == 0] /&#xD;&#xA;raise stopAll" target="_T3uwkKhsEeeVM_Mpv9c7rA"/>
         <outgoingTransitions xmi:id="_M5-VQKhhEeeVM_Mpv9c7rA" specification="[externalCommand == 1] /&#xD;&#xA;raise stopAll;&#xD;&#xA;raise startExploring" target="_lwh3kKg_EeesOMukSDuXkg"/>
-        <outgoingTransitions xmi:id="_ly_XELckEeeIWYCGi6763A" specification="[externalCommand == 3] /&#xD;&#xA;raise stopAll;&#xD;&#xA;raise startGetRCValues" target="_lwh3kKg_EeesOMukSDuXkg"/>
+        <outgoingTransitions xmi:id="_ly_XELckEeeIWYCGi6763A" specification="[externalCommand == 3] /&#xD;&#xA;raise stopAll;&#xD;&#xA;raise startDriveByRC" target="_lwh3kKg_EeesOMukSDuXkg"/>
       </vertices>
       <vertices xsi:type="sgraph:State" xmi:id="_lwh3kKg_EeesOMukSDuXkg" specification="" name="Control Loop" incomingTransitions="_PQUSoKhCEeesOMukSDuXkg _M5-VQKhhEeeVM_Mpv9c7rA _ZBv-YKhsEeeVM_Mpv9c7rA _ly_XELckEeeIWYCGi6763A" documentation="Read sensors, parameter file&#xD;&#xA;and command file&#xD;&#xA;and move the actuators">
         <outgoingTransitions xmi:id="_5U9rEKhAEeesOMukSDuXkg" specification="[externalCommand != lastExternalCommand]" target="_t-dCoKg8EeesOMukSDuXkg"/>
@@ -74,12 +74,13 @@
               </vertices>
             </regions>
           </vertices>
-          <vertices xsi:type="sgraph:State" xmi:id="_h6VwsKhhEeeVM_Mpv9c7rA" specification="entry /&#xD;&#xA;engine.stop();&#xD;&#xA;engine.slowBackward()" name="Obstacle Found" incomingTransitions="_h6qg0KhhEeeVM_Mpv9c7rA">
+          <vertices xsi:type="sgraph:State" xmi:id="_h6VwsKhhEeeVM_Mpv9c7rA" specification="entry /&#xD;&#xA;engine.stop();&#xD;&#xA;engine.slowBackward()" name="Obstacle Found" incomingTransitions="_h6qg0KhhEeeVM_Mpv9c7rA _sSsI4L88EeegQ54rUib7eA">
             <outgoingTransitions xmi:id="_h6aCIahhEeeVM_Mpv9c7rA" specification="[sensors.midRearSensorDistanceInCm &#xD;&#xA;&#x9;&lt;= minRearDistance&#xD;&#xA;] # > entry_Phase10" target="_h5k7u6hhEeeVM_Mpv9c7rA"/>
             <outgoingTransitions xmi:id="_h6Xl4ahhEeeVM_Mpv9c7rA" specification="after 1s # > entry_Phase11" target="_h5k7u6hhEeeVM_Mpv9c7rA"/>
           </vertices>
           <vertices xsi:type="sgraph:State" xmi:id="_h6StYKhhEeeVM_Mpv9c7rA" specification="entry / &#xD;&#xA;steering.turnTo(directionSearcher.newDirection);&#xD;&#xA;engine.slowForward()" name="Turning to new direction" incomingTransitions="_h6QRIKhhEeeVM_Mpv9c7rA">
             <outgoingTransitions xmi:id="_h6eTlqhhEeeVM_Mpv9c7rA" specification="after 1500ms" target="_h6gv0KhhEeeVM_Mpv9c7rA"/>
+            <outgoingTransitions xmi:id="_sSsI4L88EeegQ54rUib7eA" specification="[sensors.midFrontSensorDistanceInCm&#xD;&#xA;&#x9;&lt; minFrontDistance&#xD;&#xA;]" target="_h6VwsKhhEeeVM_Mpv9c7rA"/>
           </vertices>
           <vertices xsi:type="sgraph:State" xmi:id="_h6gv0KhhEeeVM_Mpv9c7rA" specification="[sensors.midFrontSensorAngle >= 30] /&#xD;&#xA;sensors.midFrontSensorAngleInterval = -30&#xD;&#xA;[sensors.midFrontSensorAngle &lt;= -30] /&#xD;&#xA;sensors.midFrontSensorAngleInterval = +30&#xD;&#xA;entry /&#xD;&#xA;raise blinkyOn;&#xD;&#xA;sensors.midFrontSensorAngle = -30;&#xD;&#xA;engine.slowForward();&#xD;&#xA;steering.straight()&#xD;&#xA;every 100ms /&#xD;&#xA;sensors.midFrontSensorAngle += sensors.midFrontSensorAngleInterval" name="Moving Forward" incomingTransitions="_h6eTlqhhEeeVM_Mpv9c7rA _eGjZMKhlEeeVM_Mpv9c7rA" documentation="Move forward and scan with the front sensor for obstacles">
             <outgoingTransitions xmi:id="_h6ndgKhhEeeVM_Mpv9c7rA" specification="after 10s" target="_aGluQKhmEeeVM_Mpv9c7rA"/>
@@ -154,7 +155,7 @@
         <outgoingTransitions xmi:id="_fRqY0PbZEeatUoxf6U9xLA" specification="" target="_e2aAMPbZEeatUoxf6U9xLA"/>
       </vertices>
       <vertices xsi:type="sgraph:State" xmi:id="_e2aAMPbZEeatUoxf6U9xLA" name="Idle" incomingTransitions="_fRqY0PbZEeatUoxf6U9xLA _UTG4cLcnEeeIWYCGi6763A">
-        <outgoingTransitions xmi:id="_8bZnALcnEeeIWYCGi6763A" specification="startGetRCValues" target="_2V4aTbcnEeeIWYCGi6763A"/>
+        <outgoingTransitions xmi:id="_8bZnALcnEeeIWYCGi6763A" specification="startDriveByRC" target="_2V4aTbcnEeeIWYCGi6763A"/>
       </vertices>
       <vertices xsi:type="sgraph:State" xmi:id="_MS9LALcnEeeIWYCGi6763A" specification="entry / engine.stop()" name="Stop" incomingTransitions="_FNqG0LcoEeeIWYCGi6763A">
         <outgoingTransitions xmi:id="_UTG4cLcnEeeIWYCGi6763A" specification="always" target="_e2aAMPbZEeatUoxf6U9xLA"/>
@@ -631,7 +632,7 @@
           <styles xsi:type="notation:ShapeStyle" xmi:id="_e2bOUfbZEeatUoxf6U9xLA" fontName="Verdana" fillColor="15981773" lineColor="12632256"/>
           <styles xsi:type="notation:FontStyle" xmi:id="_e2bOUvbZEeatUoxf6U9xLA"/>
           <styles xsi:type="notation:BooleanValueStyle" xmi:id="_e2dDgfbZEeatUoxf6U9xLA" name="isHorizontal" booleanValue="true"/>
-          <layoutConstraint xsi:type="notation:Bounds" xmi:id="_e2bOU_bZEeatUoxf6U9xLA" x="46" y="57" width="40" height="53"/>
+          <layoutConstraint xsi:type="notation:Bounds" xmi:id="_e2bOU_bZEeatUoxf6U9xLA" x="39" y="47" width="40" height="53"/>
         </children>
         <children xmi:id="_MTGU8LcnEeeIWYCGi6763A" type="State" element="_MS9LALcnEeeIWYCGi6763A">
           <children xsi:type="notation:DecorationNode" xmi:id="_MTGU9LcnEeeIWYCGi6763A" type="StateName">
@@ -1385,9 +1386,9 @@
       </children>
       <styles xsi:type="notation:ConnectorStyle" xmi:id="_UTQCYbcnEeeIWYCGi6763A" lineColor="4210752"/>
       <styles xsi:type="notation:FontStyle" xmi:id="_UTQCY7cnEeeIWYCGi6763A" fontName="Verdana"/>
-      <bendpoints xsi:type="notation:RelativeBendpoints" xmi:id="_UTQCYrcnEeeIWYCGi6763A" points="[0, -9, 10, 250]$[0, -242, 10, 17]"/>
+      <bendpoints xsi:type="notation:RelativeBendpoints" xmi:id="_UTQCYrcnEeeIWYCGi6763A" points="[-3, -9, 0, 449]$[-3, -441, 0, 17]"/>
       <sourceAnchor xsi:type="notation:IdentityAnchor" xmi:id="_UTQCZ7cnEeeIWYCGi6763A" id="(0.060240963855421686,0.18867924528301888)"/>
-      <targetAnchor xsi:type="notation:IdentityAnchor" xmi:id="_UTQCaLcnEeeIWYCGi6763A" id="(0.125,0.660377358490566)"/>
+      <targetAnchor xsi:type="notation:IdentityAnchor" xmi:id="_UTQCaLcnEeeIWYCGi6763A" id="(0.275,0.9056603773584906)"/>
     </edges>
     <edges xmi:id="_2WVGMLcnEeeIWYCGi6763A" type="Transition" element="_2V4aXrcnEeeIWYCGi6763A" source="_C64y9bcoEeeIWYCGi6763A" target="_C64y9bcoEeeIWYCGi6763A">
       <children xsi:type="notation:DecorationNode" xmi:id="_2WVGNLcnEeeIWYCGi6763A" type="TransitionExpression">
@@ -1440,6 +1441,17 @@
       <bendpoints xsi:type="notation:RelativeBendpoints" xmi:id="_7d56wrgpEeefwK347TKcnw" points="[-4, 0, 28, 189]$[-74, 0, -42, 189]$[-74, -111, -42, 78]$[-49, -157, -17, 32]"/>
       <sourceAnchor xsi:type="notation:IdentityAnchor" xmi:id="_7d-MMLgpEeefwK347TKcnw" id="(0.03184713375796178,0.576271186440678)"/>
       <targetAnchor xsi:type="notation:IdentityAnchor" xmi:id="_7d-MMbgpEeefwK347TKcnw" id="(0.049586776859504134,0.594059405940594)"/>
+    </edges>
+    <edges xmi:id="_sTzjML88EeegQ54rUib7eA" type="Transition" element="_sSsI4L88EeegQ54rUib7eA" source="_-tirvqxZEeeNYcO8qZUGXw" target="_-tirsqxZEeeNYcO8qZUGXw">
+      <children xsi:type="notation:DecorationNode" xmi:id="_sT2mgL88EeegQ54rUib7eA" type="TransitionExpression">
+        <styles xsi:type="notation:ShapeStyle" xmi:id="_sT3NkL88EeegQ54rUib7eA"/>
+        <layoutConstraint xsi:type="notation:Location" xmi:id="_sT3Nkb88EeegQ54rUib7eA" x="-124" y="-14"/>
+      </children>
+      <styles xsi:type="notation:ConnectorStyle" xmi:id="_sTzjMb88EeegQ54rUib7eA" lineColor="4210752"/>
+      <styles xsi:type="notation:FontStyle" xmi:id="_sT1YYL88EeegQ54rUib7eA" fontName="Verdana"/>
+      <bendpoints xsi:type="notation:RelativeBendpoints" xmi:id="_sTzjMr88EeegQ54rUib7eA" points="[9, -6, -357, 260]$[367, -232, 1, 34]"/>
+      <sourceAnchor xsi:type="notation:IdentityAnchor" xmi:id="_sT8tIL88EeegQ54rUib7eA" id="(0.45317220543806647,0.0958904109589041)"/>
+      <targetAnchor xsi:type="notation:IdentityAnchor" xmi:id="_sT8tIb88EeegQ54rUib7eA" id="(0.06936416184971098,0.5068493150684932)"/>
     </edges>
   </notation:Diagram>
   <notation:Diagram xmi:id="_h5k7uahhEeeVM_Mpv9c7rA" type="org.yakindu.sct.ui.editor.editor.StatechartDiagramEditor" element="_h5k7u6hhEeeVM_Mpv9c7rA" measurementUnit="Pixel">
