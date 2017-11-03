@@ -5,6 +5,7 @@
 #include "../include/pigpio.h"
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 // Sensors
 // Ultrasonic Sensors
@@ -110,6 +111,7 @@ void frontSteeringPWM(int gpio, int level, uint32_t tick) {
 	}
 	lastLevelFront = level;
 }
+
 int getFrontSteeringTicks() {
 	return ticksFront;
 }
@@ -183,29 +185,55 @@ int getExternalCommand() {
 //	return 1;
 	FILE *externalCommandFile;
 	char buff[255];
-	externalCommandFile = fopen("/var/local/rovercontrol/state", "r");
+	externalCommandFile = fopen("/var/local/rovercontrol/command", "r");
 	fscanf(externalCommandFile, "%s", buff);
 	fclose(externalCommandFile);
 	if (strcmp(buff, "Stop") == 0) return 0;
-	if (strcmp(buff, "Start") == 0) return 1;
+	if (strcmp(buff, "Explore") == 0) return 1;
 	if (strcmp(buff, "Park") == 0) return 2;
+	if (strcmp(buff, "RemoteControl") == 0) return 3;
 	return 0;
+}
+
+int getExternalParameter(char* parameterName) {
+	FILE *externalParametersFile;
+	char buff[255];
+	char *parameter;
+	int result = 0;
+	externalParametersFile = fopen("/var/local/rovercontrol/parameters", "r");
+	while (fgets(buff, sizeof(buff), externalParametersFile) != NULL)
+	{
+		buff[strlen(buff)] = 0;
+		if (strncmp(buff, parameterName, strlen(parameterName)) == 0) {
+			strtok(buff, "="); parameter = strtok(NULL, "=");
+			if (parameter != NULL) {
+				result = atoi(parameter);
+				break;
+			}
+		}
+	}
+	fclose(externalParametersFile);
+	return result;
 }
 
 
 int rovercontrolSetup() {
 	int rc = wiringPiSetup();
+	printf("wiringPiSetup() : %d\n", rc);
 	if (rc < 0)
 		return rc;
 	rc = pwmSetup();
+	printf("pwmSetup() : %d\n", rc);
 	if (rc < 0)
 		return rc;
 	rc = gpioInitialise();
+	printf("gpioInitialise() : %d\n", rc);
 	if (rc <0)
 		return rc;
 	gpioSetAlertFunc(21, frontSteeringPWM);
 	gpioSetAlertFunc(20, rearSteeringPWM);
 	gpioSetAlertFunc(19, speedPWM);
+	printf("Setup successful\n");
 	return 0;
 }
 
