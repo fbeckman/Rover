@@ -5,14 +5,15 @@ using System.Windows.Forms;
 
 namespace SendCommandOverSerial
 {
-    public partial class Form1 : Form
+    public partial class MainUI : Form
     {
         SerialPort _serialPort;
 
         Point mCenter;
         Point mCurrent;
+        bool remoteControlActive = false;
 
-        public Form1()
+        public MainUI()
         {
             InitializeComponent();
             mousePad.Cursor = Cursors.SizeAll;
@@ -21,10 +22,14 @@ namespace SendCommandOverSerial
             // Create a new SerialPort object with default settings.
             _serialPort = new SerialPort();
 
-            
+
             mCenter = new Point(mousePad.DisplayRectangle.Left + mousePad.DisplayRectangle.Width / 2, mousePad.DisplayRectangle.Top + mousePad.DisplayRectangle.Height / 2);
             mCurrent = mCenter;
             cmbSerialPorts.DataSource = ports;
+
+            chkRemoteControl.Checked = false;
+            lblX.Text = "0";
+            lblY.Text = "0";
         }
 
         private void frmClosing(object sender, EventArgs e)
@@ -40,21 +45,26 @@ namespace SendCommandOverSerial
         private void btnPark_Click(object sender, EventArgs e)
         {
             WriteCommandToSerialPort("Park", _serialPort);
+            remoteControlActive = false;
         }
 
         private void btnStop_Click(object sender, EventArgs e)
         {
             WriteCommandToSerialPort("Stop", _serialPort);
+            remoteControlActive = false;
         }
 
         private void btnFreeDrive_Click(object sender, EventArgs e)
         {
             WriteCommandToSerialPort("FreeDrive", _serialPort);
+            remoteControlActive = false;
         }
 
-        private void btnRemoteControl_Click(object sender, EventArgs e)
+        private void chkRemoteControl_CheckedChanged(object sender, EventArgs e)
         {
-            WriteCommandToSerialPort("RemoteControl", _serialPort);
+            remoteControlActive = chkRemoteControl.Checked;
+            if (remoteControlActive)
+                WriteCommandToSerialPort("RemoteControl", _serialPort);
         }
 
         private void mousePad_Paint(object sender, PaintEventArgs e)
@@ -78,9 +88,13 @@ namespace SendCommandOverSerial
                 lblY.Text = speed.ToString();
                 mCurrent = e.Location;
                 mousePad.Invalidate();
+
+                if (remoteControlActive)
+                {
+                    WriteCommandToSerialPort(string.Format("Speed:{0}", speed), _serialPort);
+                    WriteCommandToSerialPort(string.Format("Heading:{0}", direction), _serialPort);
+                }
             }
-            //WriteCommandToSerialPort(string.Format("Speed:{0}", speed), _serialPort);
-            //WriteCommandToSerialPort(string.Format("Direction:{0}", direction), _serialPort);
 
         }
 
@@ -101,10 +115,11 @@ namespace SendCommandOverSerial
             {
                 _serialPort.Open();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
         }
+
     }
 }

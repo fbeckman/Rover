@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace SendCommandOverSerial
 {
-    partial class Form1
+    partial class MainUI
     {
         /// <summary>
         /// Required designer variable.
@@ -36,10 +36,10 @@ namespace SendCommandOverSerial
             this.cmbSerialPorts = new System.Windows.Forms.ComboBox();
             this.btnStop = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.btnRemoteControl = new System.Windows.Forms.Button();
             this.lblX = new System.Windows.Forms.Label();
             this.lblY = new System.Windows.Forms.Label();
             this.mousePad = new System.Windows.Forms.PictureBox();
+            this.chkRemoteControl = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.mousePad)).BeginInit();
             this.SuspendLayout();
             // 
@@ -97,33 +97,23 @@ namespace SendCommandOverSerial
             this.label1.Tag = "Ser";
             this.label1.Text = "Serial Port";
             // 
-            // btnRemoteControl
-            // 
-            this.btnRemoteControl.Location = new System.Drawing.Point(270, 234);
-            this.btnRemoteControl.Name = "btnRemoteControl";
-            this.btnRemoteControl.Size = new System.Drawing.Size(108, 23);
-            this.btnRemoteControl.TabIndex = 6;
-            this.btnRemoteControl.Text = "Remote Control";
-            this.btnRemoteControl.UseVisualStyleBackColor = true;
-            this.btnRemoteControl.Click += new System.EventHandler(this.btnRemoteControl_Click);
-            // 
             // lblX
             // 
             this.lblX.AutoSize = true;
-            this.lblX.Location = new System.Drawing.Point(282, 307);
+            this.lblX.Location = new System.Drawing.Point(301, 213);
             this.lblX.Name = "lblX";
             this.lblX.Size = new System.Drawing.Size(24, 13);
             this.lblX.TabIndex = 7;
-            this.lblX.Text = "lblX";
+            this.lblX.Text = "";
             // 
             // lblY
             // 
             this.lblY.AutoSize = true;
-            this.lblY.Location = new System.Drawing.Point(338, 307);
+            this.lblY.Location = new System.Drawing.Point(412, 115);
             this.lblY.Name = "lblY";
             this.lblY.Size = new System.Drawing.Size(24, 13);
             this.lblY.TabIndex = 8;
-            this.lblY.Text = "lblY";
+            this.lblY.Text = "";
             // 
             // mousePad
             // 
@@ -135,23 +125,33 @@ namespace SendCommandOverSerial
             this.mousePad.TabStop = false;
             this.mousePad.MouseMove += mousePad_MouseMove;
             this.mousePad.Paint += mousePad_Paint;
-
             // 
-            // Form1
+            // chkRemoteControl
+            // 
+            this.chkRemoteControl.AutoSize = true;
+            this.chkRemoteControl.Location = new System.Drawing.Point(275, 242);
+            this.chkRemoteControl.Name = "chkRemoteControl";
+            this.chkRemoteControl.Size = new System.Drawing.Size(99, 17);
+            this.chkRemoteControl.TabIndex = 10;
+            this.chkRemoteControl.Text = "Remote Control";
+            this.chkRemoteControl.UseVisualStyleBackColor = true;
+            this.chkRemoteControl.CheckedChanged += new System.EventHandler(this.chkRemoteControl_CheckedChanged);
+            // 
+            // MainUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(464, 405);
+            this.Controls.Add(this.chkRemoteControl);
             this.Controls.Add(this.mousePad);
             this.Controls.Add(this.lblY);
             this.Controls.Add(this.lblX);
-            this.Controls.Add(this.btnRemoteControl);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnStop);
             this.Controls.Add(this.cmbSerialPorts);
             this.Controls.Add(this.btnPark);
             this.Controls.Add(this.btnFreeDrive);
-            this.Name = "Form1";
+            this.Name = "MainUI";
             this.Text = "Form1";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmClosing);
             ((System.ComponentModel.ISupportInitialize)(this.mousePad)).EndInit();
@@ -169,10 +169,10 @@ namespace SendCommandOverSerial
         private ComboBox cmbSerialPorts;
         private Button btnStop;
         private Label label1;
-        private Button btnRemoteControl;
         private Label lblX;
         private Label lblY;
         private PictureBox mousePad;
+        private CheckBox chkRemoteControl;
 
         
     }
